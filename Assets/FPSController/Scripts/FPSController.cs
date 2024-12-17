@@ -10,11 +10,15 @@ public class FPSController : MonoBehaviour
 
     private float movementX;
     private float movementY;
-    
-    
-    
+
+
+
     public float speed = 10f;
     public float jumpForce = 5f;
+
+
+    public bool shoot;
+
 
 
     public Transform cameraTransform;
@@ -28,10 +32,13 @@ public class FPSController : MonoBehaviour
     void OnMove(InputValue movementValue)
     {
         Vector2 movementVector = movementValue.Get<Vector2>();
-        movementX = movementVector.x; 
-        movementY = movementVector.y; 
+        movementX = movementVector.x;
+        movementY = movementVector.y;
     }
-    private void FixedUpdate() 
+    public void OnFire(InputValue value){
+        shoot = value.isPressed;
+    }
+    private void FixedUpdate()
     {
         Vector3 moveDirection = (cameraTransform.forward * movementY + cameraTransform.right * movementX).normalized;
         moveDirection.y = 0;
@@ -48,5 +55,6 @@ public class FPSController : MonoBehaviour
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
 
         }
+
     }
 }
